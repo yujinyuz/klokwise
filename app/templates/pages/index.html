@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>klokwise | Manage your timesheets easily</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src="https://unpkg.com/htmx.org"></script>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">klokwise</h1>
+
+      <!-- Text input field -->
+      <div class="field">
+        <label class="label">What are you working on today?</label>
+        <div class="control">
+          <input id="workInput" class="input" type="text" placeholder="Enter your task here...">
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <!-- Start/Stop button -->
+        <button id="startStopButton" class="button is-primary" hx-post="/session/1/toggle-work" hx-swap="outerHTML"
+          hx-vals='{"status": "start"}'>
+          Start Work
+        </button>
+
+        <!-- Break button -->
+        <button class="button is-warning">
+          Break
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mock backend with inline htmx script -->
+  <script></script>
+</body>
+
+</html>
