@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["advanced-alchemy>=0.19.3", "litestar[standard]>=2.11.0"]
+dependencies = [
+    "advanced-alchemy>=0.19.3",
+    "litestar[standard]>=2.11.0",
+]
 
 [tool.uv]
 dev-dependencies = ["ruff>=0.6.4"]

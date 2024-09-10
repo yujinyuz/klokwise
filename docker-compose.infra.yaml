@@ -1,0 +1,50 @@
+services:
+  cache:
+    # https://hub.docker.com/_/postgres
+    image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
+    ulimits:
+      memlock: -1
+    ports:
+      - "16379:6379"
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+    # For better performance, consider `host` mode instead `port` to avoid docker NAT.
+    # `host` mode is NOT currently supported in Swarm Mode.
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#network_mode
+    # network_mode: "host"
+    volumes:
+      - cache-data:/data
+  db:
+    image: postgres:latest
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: "klokwise_user"
+      POSTGRES_PASSWORD: "klokwise_password"
+      POSTGRES_DB: "klokwise"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    healthcheck:
+      test:
+        - CMD
+        - pg_isready
+        - -U
+        - klokwise_user
+      interval: 2s
+      timeout: 3s
+      retries: 40
+volumes:
+  db-data: {}
+  cache-data: {}
